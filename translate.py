@@ -36,7 +36,7 @@ def csfloat(item_api):
     translated = {
         "site": 'csfloat',
         "id": item_api['id'],
-        "name": item_api['item']['item_name'],
+        "name": item_api['item']['market_hash_name'],
         "float": item_api['item']['float_value'],
         "price": item_api['price'] / 100,
         "tradable": item_api['item']['tradable'],
