@@ -36,7 +36,7 @@ def waxpeer(item_name):
         res = json.loads(res.text)
         return res
     except Exception as e:   # catch-all
-        print("Waxpeer request failed:", e)
+        raise Exception("[waxpeer] Request failed", e)
 
 def csfloat(item_name):
     """
@@ -57,7 +57,7 @@ def csfloat(item_name):
         res = json.loads(res.text)
         return res
     except Exception as e:   # catch-all
-        print("Waxpeer request failed:", e)
+        raise Exception("[csfloat] Request failed", e)
 
 def gamerpay(item_name):
     # Prep req
@@ -90,7 +90,7 @@ def gamerpay(item_name):
         res = json.loads(res.text)
         return res
     except Exception as e:   # catch-all
-        print("Waxpeer request failed:", e)
+        raise Exception("[gamerpay] Request failed", e)
 
 def shadowpay(item_name):
     """
@@ -114,4 +114,4 @@ def shadowpay(item_name):
         res = json.loads(res.text)
         return res
     except Exception as e:   # catch-all
-        print("Waxpeer request failed:", e)
+        raise Exception("[shadowpay] Request failed", e)
