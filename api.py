@@ -101,7 +101,7 @@ def shadowpay(item_name):
 
     # Prep req
     url_item_name = urllib.parse.quote_plus(item_name)
-    url = f"https://api.shadowpay.com/api/v2/user/items?price_to=150354.61&sort_column=price&sort_dir=asc&stack=false&offset=0&limit=50&sort=asc&game=csgo&search={url_item_name}"
+    url = f"https://api.shadowpay.com/api/v2/user/items?price_to=150354.61&sort_column=price&sort_dir=asc&stack=false&offset=0&limit=50&sort=asc&game=csgo&steam_market_hash_name={url_item_name}"
     payload = {}
     headers = {
         'Authorization': f"Bearer {config.API_KEY_SHADOWPAY}"
