@@ -69,23 +69,30 @@ len_final = len(skins_to_search)
 print(f"Searching {len_final} / {len_initial} skins")
 
 # TEST
-skins_to_search = skins_to_search[:20]
+skins_to_search = skins_to_search[250:270]
 
 # Fetch all items from all sources
 results = []
-for skin in skins_to_search:
-    for s in config.search['sources']:
-        print(f"Fetching from {s} - {skin}")
-        data = getattr(search, s)(skin) # call search[s](skin)
-        print(f"{len(data)} skins found on {s}")
-        results.extend(data)
-        #print(data)
 
+try:
+    for skin in skins_to_search:
+        for s in config.search['sources']:
+            print(f"Fetching from {s} - {skin}")
+            data = getattr(search, s)(skin) # call search[s](skin)
+            print(f"{len(data)} skins found on {s}")
+            results.extend(data)
+            #print(data)
+except Exception as e:
+    print(f"🟥 Error: {e}")
+
+# Store results
 print(f"Total of {len(results)} skins found")
-data_to_csv(results)
 
-data = [obj.__dict__ for obj in results]
-json.dump(data, open("results.json", "w"), indent=4)
+if (len(results) > 0):
+    print('Saving results to CSV and JSON')
+    data_to_csv(results)
+    data = [obj.__dict__ for obj in results]
+    json.dump(data, open("results.json", "w"), indent=4)
 
 """
 # Fetch item info

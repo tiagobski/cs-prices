@@ -30,9 +30,13 @@ def waxpeer(item_name):
     url = f"https://api.waxpeer.com/v1/search-items-by-name?api={config.API_KEY_WAXPEER}&minified=0&order=price&sort=ASC&names[]={url_item_names}"
     
     # Send req, parse json, output
-    res = requests.request("GET", url)
-    res = json.loads(res.text)
-    return res
+    try:
+        res = requests.request("GET", url)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        print("Waxpeer request failed:", e)
 
 def csfloat(item_name):
     """
@@ -47,9 +51,13 @@ def csfloat(item_name):
     }
 
     # Send req, parse json, output
-    res = requests.request("GET", url, headers=headers, data=payload)
-    res = json.loads(res.text)
-    return res
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        print("Waxpeer request failed:", e)
 
 def gamerpay(item_name):
     # Prep req
@@ -76,9 +84,13 @@ def gamerpay(item_name):
     }
 
     # Send req, parse json, output
-    res = requests.request("GET", url, headers=headers, data=payload)
-    res = json.loads(res.text)
-    return res
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        print("Waxpeer request failed:", e)
 
 def shadowpay(item_name):
     """
@@ -96,6 +108,10 @@ def shadowpay(item_name):
     }
 
     # Send req, parse json, output
-    res = requests.request("GET", url, headers=headers, data=payload)
-    res = json.loads(res.text)
-    return res
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        print("Waxpeer request failed:", e)
