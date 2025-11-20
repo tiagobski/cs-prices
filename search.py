@@ -21,7 +21,7 @@ class Search:
         count = sum(1 for t in timestamps if now - t <= 60)
 
         # If hit rate limit, wait until it's clear
-        if count >= config.search['rate_limit']:
+        if count >= config.search['rate_limit'] and config.search['rate_limit'] != 0:
             first_search_ts = self.searches[source][0]
             next_req = first_search_ts + 61 # TODO: Maybe 61?
             seconds_to_wait = next_req - now

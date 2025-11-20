@@ -1,6 +1,6 @@
 """
 TODO: ✅ Handle non-200 res.status_code
-TODO: 🏃‍♂️ Handle rate limits
+TODO: ✅ Handle rate limits
 TODO: Gamerpay returning StatTrak items mixed with non-st, as well as items without std name format "{name} {condition}"
 TODO: Search for StatTrak items (all api sources)
 """
@@ -20,31 +20,6 @@ def data_to_csv(data, csv_path='results.csv'):
     df = pd.DataFrame([obj.__dict__ for obj in data])
     df.to_csv(csv_path, index=False)
     return df
-
-"""
-# ===========================================
-item = 'MP5-SD | Savannah Halftone (Field-Tested)' 
-#data = search.shadowpay(item)
-#print_json(data=[item.__dict__ for item in data])
-
-results = []
-for s in config.search['sources']:
-    print(f"Fetching from {s} - {item}")
-    #data = api[s](item)
-    data = getattr(search, s)(item)
-    print(f"{len(data)} items found on {s}")
-    results.extend(data)
-    #print(data)
-
-print(f"Total of {len(results)} items found")
-data_to_csv(results)
-
-data = [obj.__dict__ for obj in results]
-json.dump(data, open("results.json", "w"), indent=4)
-
-exit()
-# ===========================================
-"""
 
 # Load list of skins
 skins = None
@@ -70,7 +45,7 @@ len_final = len(skins_to_search)
 print(f"Searching {len_final} / {len_initial} skins")
 
 # TEST
-skins_to_search = skins_to_search[300:350]
+#skins_to_search = skins_to_search[300:350]
 
 # Fetch all items from all sources
 results = []
@@ -80,9 +55,9 @@ try:
     for skin in skins_to_search:
         unique_searches += 1
         for s in config.search['sources']:
-            print(f"Fetching from {s} - {skin}")
+            print(f"[{unique_searches+1}/{len_final}] [{s}] Searching - {skin}")
             data = getattr(search, s)(skin) # call search[s](skin)
-            print(f"{len(data)} skins found on {s}")
+            print(f"[{unique_searches+1}/{len_final}] [{s}] {len(data)} found")
             results.extend(data)
             #print(data)
 except Exception as e:
