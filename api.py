@@ -62,7 +62,11 @@ def csfloat(item_name):
 def gamerpay(item_name):
     # Prep req
     url_item_name = urllib.parse.quote_plus(item_name)
-    url = f"https://api.gamerpay.gg/feed?page=1&sortBy=price&ascending=true&market=steam&query={url_item_name}"
+    is_st = int('StatTrak' in item_name)
+    url = f"https://api.gamerpay.gg/feed?page=1&sortBy=price&ascending=true&market=steam&statTrak={is_st}&query={url_item_name}"
+    
+    print(url)
+    exit()
     payload = {}
     headers = { 
         'accept': '*/*', 

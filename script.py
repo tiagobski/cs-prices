@@ -1,7 +1,7 @@
 """
 TODO: ✅ Handle non-200 res.status_code
 TODO: ✅ Handle rate limits
-TODO: Gamerpay returning StatTrak items mixed with non-st, as well as items without std name format "{name} {condition}"
+TODO: ✅ Gamerpay returning StatTrak items mixed with non-st, as well as items without std name format "{name} {condition}"
 TODO: Search for StatTrak items (all api sources)
 """
 
