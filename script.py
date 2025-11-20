@@ -1,6 +1,7 @@
 """
-TODO: Handle non-200 res.status_code
-TODO: Handle rate limits
+TODO: ✅ Handle non-200 res.status_code
+TODO: 🏃‍♂️ Handle rate limits
+TODO: Gamerpay returning StatTrak items mixed with non-st, as well as items without std name format "{name} {condition}"
 TODO: Search for StatTrak items (all api sources)
 """
 
@@ -13,7 +14,7 @@ import os
 import config
 import api
 import translate
-import search
+from search import Search; search = Search()
 
 def data_to_csv(data, csv_path='results.csv'):    
     df = pd.DataFrame([obj.__dict__ for obj in data])
@@ -69,13 +70,15 @@ len_final = len(skins_to_search)
 print(f"Searching {len_final} / {len_initial} skins")
 
 # TEST
-skins_to_search = skins_to_search[250:270]
+skins_to_search = skins_to_search[300:350]
 
 # Fetch all items from all sources
 results = []
+unique_searches = 0
 
 try:
     for skin in skins_to_search:
+        unique_searches += 1
         for s in config.search['sources']:
             print(f"Fetching from {s} - {skin}")
             data = getattr(search, s)(skin) # call search[s](skin)
@@ -86,7 +89,7 @@ except Exception as e:
     print(f"🟥 Error: {e}")
 
 # Store results
-print(f"Total of {len(results)} skins found")
+print(f"Total of {len(results)} skins found ({unique_searches} uniques)")
 
 if (len(results) > 0):
     print('Saving results to CSV and JSON')

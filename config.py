@@ -9,7 +9,8 @@ API_KEY_SHADOWPAY = os.getenv('API_KEY_SHADOWPAY')
 search = {
     "stat_trak": False,     # Bool
     "conditions": ['Field-Tested', 'Well-Worn', 'Battle-Scarred'],  # List all conditions you want to search
-    "sources": ['waxpeer', 'csfloat', 'gamerpay', 'shadowpay']      # List all sources you want to search
+    "sources": ['waxpeer', 'csfloat', 'gamerpay', 'shadowpay'],     # List all sources you want to search
+    "rate_limit": 20,                                               # Searches per minute
 }
 
 item_conditions = [
