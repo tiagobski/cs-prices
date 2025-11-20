@@ -1,0 +1,114 @@
+"""
+TODO: Handle non-200 res.status_code
+TODO: Handle rate limits
+TODO: Search for StatTrak items (all api sources)
+"""
+
+from rich import print_json
+import json
+from datetime import datetime
+import pandas as pd
+import os
+
+import config
+import api
+import translate
+import search
+
+def data_to_csv(data, csv_path='results.csv'):    
+    df = pd.DataFrame([obj.__dict__ for obj in data])
+    df.to_csv(csv_path, index=False)
+    return df
+
+"""
+# ===========================================
+item = 'MP5-SD | Savannah Halftone (Field-Tested)' 
+#data = search.shadowpay(item)
+#print_json(data=[item.__dict__ for item in data])
+
+results = []
+for s in config.search['sources']:
+    print(f"Fetching from {s} - {item}")
+    #data = api[s](item)
+    data = getattr(search, s)(item)
+    print(f"{len(data)} items found on {s}")
+    results.extend(data)
+    #print(data)
+
+print(f"Total of {len(results)} items found")
+data_to_csv(results)
+
+data = [obj.__dict__ for obj in results]
+json.dump(data, open("results.json", "w"), indent=4)
+
+exit()
+# ===========================================
+"""
+
+# Load list of skins
+skins = None
+with open('csgo-api/_list_skin_names.json') as fd: skins = json.load(fd)
+len_initial = len(skins)
+
+# Filter list of skins
+skins_to_search = []
+for skin in skins:
+    # Exclude StatTrak skins
+    if config.search['stat_trak'] is False and 'StatTrak' in skin:
+        #print(f"Excluding {skin}")
+        continue
+
+    # Exclude skins not in the conditions we are looking for
+    if not any(s in skin for s in config.search['conditions']):
+        #print(f"Excluding {skin}")
+        continue
+
+    skins_to_search.append(skin)
+
+len_final = len(skins_to_search)
+print(f"Searching {len_final} / {len_initial} skins")
+
+# TEST
+skins_to_search = skins_to_search[:20]
+
+# Fetch all items from all sources
+results = []
+for skin in skins_to_search:
+    for s in config.search['sources']:
+        print(f"Fetching from {s} - {skin}")
+        data = getattr(search, s)(skin) # call search[s](skin)
+        print(f"{len(data)} skins found on {s}")
+        results.extend(data)
+        #print(data)
+
+print(f"Total of {len(results)} skins found")
+data_to_csv(results)
+
+data = [obj.__dict__ for obj in results]
+json.dump(data, open("results.json", "w"), indent=4)
+
+"""
+# Fetch item info
+
+item = 'MP5-SD | Savannah Halftone (Field-Tested)'  #'USP-S | 27 (Field-Tested)'  #StatTrak™ XM1014 | Seasons
+
+data = api.waxpeer(item)
+item = data['items'][0]
+item = translate.waxpeer(item)
+print_json(data=item.__dict__)
+
+data = api.csfloat(item)
+item = data['data'][0]
+item = translate.csfloat(item)
+print_json(data=item.__dict__)
+
+data = api.gamerpay(item)
+item = data['items'][2]
+item = translate.gamerpay(item)
+print_json(data=item.__dict__)
+
+data = api.shadowpay(item)
+item = data['data'][0]
+item = translate.shadowpay(item)
+print_json(data=item.__dict__)
+"""
