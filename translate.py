@@ -51,7 +51,7 @@ def gamerpay(item_api):
     translated = {
         "site": 'gamerpay',
         "id": item_api['id'],
-        "name": item_api['name'],
+        "name": item_api['marketHashName'],
         "float": item_api['floatValue'],
         "price": item_api['price'] / 100,
         "tradable": item_api['tradeLockExpiresAt'] == None,
