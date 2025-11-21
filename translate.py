@@ -1,6 +1,7 @@
 import re
 
 from models.item import Item
+from models.item_pricelist import ItemPricelist
 
 def waxpeer_gen_url(item_api):
     # Handle characters
@@ -75,4 +76,36 @@ def shadowpay(item_api):
     }
 
     item = Item(**translated)
+    return item
+
+def waxpeer_pricelist(item_api):
+    translated = {
+        "name": item_api['name'],
+        "qty": item_api['count'],
+        "price_min": item_api['min'] / 1000,
+        "price_steam": item_api['steam_price'] / 1000 if item_api['steam_price'] not in [None, 0] else 0,
+    }
+
+    item = ItemPricelist(**translated)
+    return item
+
+def csfloat_pricelist(item_api):
+    translated = {
+        "name": item_api['market_hash_name'],
+        "qty": item_api['qty'],
+        "price_min": item_api['min_price'] / 100,
+    }
+
+    item = ItemPricelist(**translated)
+    return item
+
+def shadowpay_pricelist(item_api):
+    translated = {
+        "name": item_api['steam_market_hash_name'],
+        "qty": item_api['volume'],
+        "price_min": item_api['price'],
+        "liquidity": item_api['liquidity'],
+    }
+
+    item = ItemPricelist(**translated)
     return item

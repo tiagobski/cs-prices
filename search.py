@@ -69,3 +69,33 @@ class Search:
         for i in data['data']:
             output.append(translate.shadowpay(i))
         return output
+    
+    def waxpeer_pricelist(self, data=None):
+        # Download data if necessary
+        if data is None: data = api.waxpeer_prices()
+
+        # Standardize output
+        output = []
+        for i in data['items']:
+            output.append(translate.waxpeer_pricelist(i))
+        return output
+
+    def csfloat_pricelist(self, data=None):
+        # Download data if necessary
+        if data is None: data = api.csfloat_prices()
+
+        # Standardize output
+        output = []
+        for i in data:
+            output.append(translate.csfloat_pricelist(i))
+        return output
+    
+    def shadowpay_pricelist(self, data=None):
+        # Download data if necessary
+        if data is None: data = api.shadowpay_prices()
+
+        # Standardize output
+        output = []
+        for i in data['data']:
+            output.append(translate.shadowpay_pricelist(i))
+        return output

@@ -119,3 +119,53 @@ def shadowpay(item_name):
         return res
     except Exception as e:   # catch-all
         raise Exception("[shadowpay] Request failed", e)
+
+def waxpeer_prices():
+    """
+    @ref https://docs.waxpeer.com/?method=v1-prices-get
+    """
+
+    url = f"https://api.waxpeer.com/v1/prices?api={config.API_KEY_WAXPEER}"
+    try:
+        res = requests.request("GET", url)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        raise Exception("[waxpeer] Request failed", e)
+    
+def csfloat_prices():
+    """
+    @ref https://docs.csfloat.com/#get-all-listings
+    """
+
+    url = "https://csfloat.com/api/v1/listings/price-list"
+    payload = {}
+    headers = {
+        'Authorization': config.API_KEY_CSFLOAT
+    }
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        raise Exception("[csfloat] Request failed", e)
+    
+def shadowpay_prices():
+    """
+    @ref https://doc.shadowpay.com/docs/shadowpay/6d63adddb51eb-get-item-prices
+    """
+
+    url = "https://api.shadowpay.com/api/v2/user/items/prices"
+    payload = {}
+    headers = {
+        'Authorization': f"Bearer {config.API_KEY_SHADOWPAY}"
+    }
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        raise Exception("[shadowpay] Request failed", e)
