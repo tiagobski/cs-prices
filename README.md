@@ -35,6 +35,13 @@ To assess fair value, implement the following procedure:
    1. Last sales on CSFloat - We should be buying at the best price registered recently
    2. Buy orders on CSFloat - We should be buying at a price equal or better than the highest
 
+Filters:
+
+- A - item - does not contain 'StatTrak' + 'Sticker'
+- G - pct - < 1.51
+- I - max_on - = csfloat
+- J - liquidity - remove 'ND' and blanks
+
 # Ideas
 
 - [ ] Implement automatically fetching CSFloat sales history
@@ -49,4 +56,4 @@ To assess fair value, implement the following procedure:
     -H 'sec-ch-ua-mobile: ?0'
   ```
 
-- [ ] ..
+- [ ] Implement automatically fetching CSFloat buy orders

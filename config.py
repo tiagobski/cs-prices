@@ -5,6 +5,7 @@ load_dotenv()
 API_KEY_WAXPEER = os.getenv('API_KEY_WAXPEER')
 API_KEY_CSFLOAT = os.getenv('API_KEY_CSFLOAT')
 API_KEY_SHADOWPAY = os.getenv('API_KEY_SHADOWPAY')
+COOKIE_CSFLOAT = os.getenv('COOKIE_CSFLOAT')
 
 search = {
     "stat_trak": False,     # Bool

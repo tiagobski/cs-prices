@@ -109,3 +109,15 @@ def shadowpay_pricelist(item_api):
 
     item = ItemPricelist(**translated)
     return item
+
+def csfloat_price_history(data):
+    for i in range(len(data)):
+        data[i]['avg_price'] /= 100
+
+    return data
+
+def csfloat_buy_orders(data):
+    for i in range(len(data)):
+        data[i]['price'] /= 100
+
+    return data

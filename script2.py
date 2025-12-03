@@ -21,7 +21,7 @@ pricelist = {
 }
 
 # Download price lists
-if 1==2:
+if 1==1:
     print('Fetching price list from waxpeer')
     pricelist['waxpeer'] = api.waxpeer_prices()
     json.dump(pricelist['waxpeer'], open("data/waxpeer.json", "w"), indent=4)

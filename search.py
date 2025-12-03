@@ -99,3 +99,18 @@ class Search:
         for i in data['data']:
             output.append(translate.shadowpay_pricelist(i))
         return output
+
+    def csfloat_price_history(self, item_name):
+        # Standardize output
+        data = api.csfloat_price_history(item_name)
+        output = translate.csfloat_price_history(data)
+        return output
+    
+    def csfloat_buy_orders(self, item_name):
+        listings = api.csfloat(item_name, 1)
+        listing_id = listings['data'][0]['id']
+        buy_orders = api.csfloat_buy_orders(listing_id)
+        
+        # Standardize output
+        output = translate.csfloat_buy_orders(buy_orders)
+        return output

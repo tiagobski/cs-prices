@@ -38,13 +38,13 @@ def waxpeer(item_name):
     except Exception as e:   # catch-all
         raise Exception("[waxpeer] Request failed", e)
 
-def csfloat(item_name):
+def csfloat(item_name, limit=50):
     """
     @ref https://docs.csfloat.com/#get-all-listings
     """
     # Prep req
     url_item_name = urllib.parse.quote_plus(item_name)
-    url = f"https://csfloat.com/api/v1/listings?limit=50&sort_by=lowest_price&type=buy_now&market_hash_name={url_item_name}"
+    url = f"https://csfloat.com/api/v1/listings?limit={limit}&sort_by=lowest_price&type=buy_now&market_hash_name={url_item_name}"
     payload = {}
     headers = {
         'Authorization': config.API_KEY_CSFLOAT
@@ -169,3 +169,36 @@ def shadowpay_prices():
         return res
     except Exception as e:   # catch-all
         raise Exception("[shadowpay] Request failed", e)
+
+def csfloat_price_history(item_name):
+    # Prep req
+    url_item_name = urllib.parse.quote_plus(item_name)
+    url = f"https://csfloat.com/api/v1/history/{url_item_name}/graph"
+    payload = {}
+    headers = {}
+    
+    # Send req, parse json, output
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        raise Exception("[csfloat] Request failed", e)
+
+def csfloat_buy_orders(listing_id):
+    # Prep req
+    url = f"https://csfloat.com/api/v1/listings/{listing_id}/buy-orders?limit=10"
+    payload = {}
+    headers = {
+        'Cookie': f"session={config.COOKIE_CSFLOAT}"
+    }
+
+    # Send req, parse json, output
+    try:
+        res = requests.request("GET", url, headers=headers, data=payload)
+        res.raise_for_status()
+        res = json.loads(res.text)
+        return res
+    except Exception as e:   # catch-all
+        raise Exception("[csfloat] Request failed", e)
