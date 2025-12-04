@@ -111,6 +111,10 @@ def shadowpay_pricelist(item_api):
     return item
 
 def csfloat_price_history(data):
+    # Select last 30d
+    data = data[:30]
+
+    # Convert to human price
     for i in range(len(data)):
         data[i]['avg_price'] /= 100
 
