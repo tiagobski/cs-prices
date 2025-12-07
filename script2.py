@@ -64,6 +64,12 @@ liquidity = {}  # liquidity[item_name] = float(0-100)|None
 for e in pricelist['shadowpay']:
     liquidity[e.name] = e.liquidity
 
+# Get steam price
+print('Getting steam prices')
+price_steam = {}  # price_steam[item_name] = int
+for e in pricelist['waxpeer']:
+    price_steam[e.name] = e.price_steam
+
 # Get min and max values
 print('Calculating min, max values')
 for item in pricelist_by_item:
@@ -74,7 +80,11 @@ for item in pricelist_by_item:
     pricelist_by_item[item]['pct'] = pctdiff(pricelist_by_item[item]['min'], pricelist_by_item[item]['max'])
     pricelist_by_item[item]['min_on'] = min_on
     pricelist_by_item[item]['max_on'] = max_on
-    pricelist_by_item[item]['liquidity'] = liquidity[item] if item in liquidity else "ND"   # No data
+    pricelist_by_item[item]['liquidity'] = liquidity[item] if item in liquidity else "ND"
+    pricelist_by_item[item]['price_steam'] = price_steam[item] if item in price_steam else None
+    pricelist_by_item[item]['pct_min_to_steam'] = pctdiff(pricelist_by_item[item]['min'], price_steam[item]) if item in price_steam else None
+    pricelist_by_item[item]['pct_max_to_steam'] = pctdiff(pricelist_by_item[item]['max'], price_steam[item]) if item in price_steam else None
+
 
 print('Writing output')
 json.dump(pricelist_by_item, open("data/pricelist_by_item.json", "w"), indent=4)
